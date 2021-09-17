@@ -1,0 +1,22 @@
+DataBase Queries
+
+create database e_walletdb;
+use e_walletdb;
+
+create table users(userid varchar(20) primary key,password varchar(15) not null,usertype varchar(10) default "customer",userstatus varchar (10) default "active");
+
+create table userinfo(userid varchar(20) ,foreing key(userid) references users(userid), name varchar(30) not null, email varchar(30) unique,mobno varchar(12) not null,secques 
+varchar(40) not null,secans varchar(20) not null,dt date not null,walletid varchar(15) unique,bankacc int,balance float default 0.0 check (balance>=0));
+
+create table bankacc(accountno int primary key,bankname varchar(30) not null,name varchar(50) not null, email varchar(30) not null, balance float check(balance>=0.0));
+
+
+create table kycdocinfo(userid varchar(20),foreign key(userid) references users(userid),profile varchar(50) unique, adharcard varchar(50) unique);
+
+create table companydata(userid varchar(20),compnm varchar(20) unique not null,walletid varchar(20) unique,dt datetime not null,
+comptype varchar(20) not null, balance float default 0.0);
+
+create table acctran(transno int auto_increment primary key,transdt date not
+null,srcwalletid varchar(15) not null,destwalletid varchar(15) not null,transactiontype
+varchar(20)
+not null,amount float not null);
